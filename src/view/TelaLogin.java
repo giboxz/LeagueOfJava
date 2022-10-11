@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import javax.swing.JPasswordField;
 
 public class TelaLogin extends JFrame {
 
@@ -26,9 +27,9 @@ public class TelaLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtLogin;
-	private JTextField txtSenha;
 
 	private LoginController loginController;
+	private JPasswordField txtSenha;
 	/**
 	 * Launch the application.
 	 */
@@ -71,17 +72,18 @@ public class TelaLogin extends JFrame {
 		lblNewLabel.setBounds(64, 170, 250, 20);
 		contentPane.add(lblNewLabel);
 		
-		txtSenha = new JTextField();
-		txtSenha.setColumns(10);
-		txtSenha.setBounds(64, 273, 250, 30);
-		contentPane.add(txtSenha);
-		
 		JLabel lblSenha = new JLabel("Senha");
 		lblSenha.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblSenha.setBounds(64, 242, 250, 20);
 		contentPane.add(lblSenha);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCadastraLogin telaCadastraLogin = new TelaCadastraLogin();
+				telaCadastraLogin.setVisible(true);
+			}
+		});
 		btnCadastrar.setFont(new Font("Verdana", Font.BOLD, 12));
 		btnCadastrar.setBounds(204, 346, 110, 30);
 		contentPane.add(btnCadastrar);
@@ -111,13 +113,17 @@ public class TelaLogin extends JFrame {
 		lblNewLabel_2.setBounds(64, 87, 256, 30);
 		contentPane.add(lblNewLabel_2);
 		
+		txtSenha = new JPasswordField();
+		txtSenha.setBounds(64, 273, 250, 30);
+		contentPane.add(txtSenha);
+		
 	}
 	
 	private boolean verificaLogin() {
-		if (this.loginController.verifica(txtLogin.getText(), txtSenha.getText())) {
+		if (this.loginController.verifica(txtLogin.getText(), String.valueOf(txtSenha.getPassword()))) {
 			JOptionPane.showMessageDialog(this, "Login efetuado com sucesso!");
 			return true;
-		} else {
+		} else { 
 			JOptionPane.showMessageDialog(this, "Login ou senha incorretos, tente novamente;");
 			return false;
 		}
